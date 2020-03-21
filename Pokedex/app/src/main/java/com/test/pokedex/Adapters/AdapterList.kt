@@ -1,17 +1,21 @@
 package com.test.pokedex.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.koushikdutta.ion.Ion
+import com.test.pokedex.Activities.ActivityDetail
 import com.test.pokedex.R
 
 class AdapterList: RecyclerView.Adapter<AdapterList.ViewHolder>() {
@@ -24,23 +28,24 @@ class AdapterList: RecyclerView.Adapter<AdapterList.ViewHolder>() {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var layoutInflater = LayoutInflater.from(parent.context)
-        return ViewHolder(layoutInflater.inflate(R.layout.list_item, parent, false))
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
+
+        return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
         return data.size()
     }
 
-    override fun onBindViewHolder(holder: AdapterList.ViewHolder, position: Int) {
-        var item: JsonObject = data.get(position).asJsonObject
-
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val item: JsonObject = data.get(position).asJsonObject
         holder.bind(item, context)
     }
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         private var pokeImage: ImageView = view.findViewById(R.id.poke_image)
         private var pokeName: TextView = view.findViewById(R.id.poke_name)
+        private var cardView: CardView = view.findViewById(R.id.card_view)
         private val defaultImageID = R.drawable.pokemon_logo_min
 
         private fun setDefaultImage(context: Context) {
@@ -48,7 +53,7 @@ class AdapterList: RecyclerView.Adapter<AdapterList.ViewHolder>() {
         }
 
         fun bind(item: JsonObject, context: Context) {
-            pokeName.text = item.get("name").asString
+            pokeName.text = item.get("name").asString.capitalize()
 
             Ion.with(context)
                 .load(item.get("url").asString)
@@ -58,6 +63,11 @@ class AdapterList: RecyclerView.Adapter<AdapterList.ViewHolder>() {
                         if (!result.get("sprites").isJsonNull) {
                             if (!result.get("sprites").asJsonObject.get("front_default").isJsonNull) {
                                 // Print
+                                cardView.setOnClickListener {
+                                    var intent = Intent(it.context, ActivityDetail::class.java)
+                                    intent.putExtra("item", result.toString())
+                                    context.startActivity(intent)
+                                }
                                 Glide.with(context)
                                     .load(result.get("sprites").asJsonObject.get("front_default").asString)
                                     .placeholder(defaultImageID)

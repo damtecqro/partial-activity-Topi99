@@ -27,16 +27,10 @@
       android:layout_height="match_parent"
       android:paddingTop="?attr/actionBarSize"
       android:layout_gravity="center"
+      android:paddingLeft="8dp"
+      android:paddingRight="8dp"
       >
 
     </androidx.recyclerview.widget.RecyclerView>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

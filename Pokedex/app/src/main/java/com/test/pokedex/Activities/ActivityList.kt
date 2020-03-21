@@ -1,11 +1,13 @@
 package com.test.pokedex.Activities
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.JsonArray
 import com.koushikdutta.ion.Ion
@@ -15,10 +17,10 @@ import com.test.pokedex.R
 import kotlinx.android.synthetic.main.activity_list.*
 
 class ActivityList : AppCompatActivity() {
-    var context: Context = this
+    private var context: Context = this
 
-    lateinit var data: JsonArray
-    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var data: JsonArray
+    private lateinit var gridLayoutManager: LinearLayoutManager
     private lateinit var adapter: AdapterList
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,14 +28,7 @@ class ActivityList : AppCompatActivity() {
         setContentView(R.layout.activity_list)
         setSupportActionBar(toolbar)
 
-        initializeComponents()
-//        initializeListeners()
         initializeData()
-
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Puchaste", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
     }
 
     private fun initializeData() {
@@ -48,21 +43,16 @@ class ActivityList : AppCompatActivity() {
     }
 
     private fun initializeList() {
-        linearLayoutManager = LinearLayoutManager(context)
-        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        linearLayoutManager.scrollToPosition(0)
+        gridLayoutManager = GridLayoutManager(context, 3)
+        gridLayoutManager.orientation = GridLayoutManager.VERTICAL
+        gridLayoutManager.scrollToPosition(0)
 
         adapter = AdapterList()
         adapter.AdapterList(context, data)
 
-        recycler_view_list.layoutManager = linearLayoutManager
+        recycler_view_list.layoutManager = gridLayoutManager
         recycler_view_list.adapter = adapter
         recycler_view_list.setHasFixedSize(true)
         recycler_view_list.itemAnimator = DefaultItemAnimator()
     }
-
-    private fun initializeComponents() {
-
-    }
-
 }

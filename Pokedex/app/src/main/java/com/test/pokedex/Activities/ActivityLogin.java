@@ -2,7 +2,6 @@ package com.test.pokedex.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -43,13 +42,10 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     public void initializeListeners() {
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = usernameText.getText().toString();
-                String password = passwordText.getText().toString();
-                login(username, password);
-            }
+        loginBtn.setOnClickListener(v -> {
+            String username = usernameText.getText().toString();
+            String password = passwordText.getText().toString();
+            login(username, password);
         });
     }
 

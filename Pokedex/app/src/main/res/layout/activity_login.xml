@@ -7,6 +7,15 @@
     tools:context=".Activities.ActivityLogin"
     android:background="@drawable/gradient_background">
 
+    <ImageView
+      android:layout_width="300dp"
+      android:layout_height="300dp"
+      android:layout_alignParentRight="true"
+      android:layout_alignParentBottom="true"
+      android:layout_marginRight="-94dp"
+      android:layout_marginBottom="-35dp"
+      android:src="@drawable/pikachu_min" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -59,13 +68,4 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="-94dp"
-        android:layout_marginBottom="-35dp"
-        android:src="@drawable/pikachu_min" />
 </RelativeLayout>
